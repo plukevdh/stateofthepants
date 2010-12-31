@@ -101,7 +101,7 @@ body {
 	margin: 15px;
 } .result .message {
 	margin: 15px;
-	color: #c6c6c6;
+	color: #a80000;
 } .result .disclaimer {
 	margin-top: 45px;
 }
@@ -110,5 +110,9 @@ a {
 	color: #afafaf;
 } a:hover {
 	color: #a3a3a3;
+}
+
+t {
+	color: #5253f7;
 }
 
