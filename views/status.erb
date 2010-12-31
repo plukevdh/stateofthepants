@@ -1,0 +1,23 @@
+<div class="result">
+  <div class="data">
+    <h2><%= @result %> </h2>
+  </div>
+
+  <% if @tweet %>
+    <p style="font-size:13pt;" class="message">
+      This is loosely<span style="vertical-align:super; color:#a80000; font-size:10pt">*</span> based on the following tweet: <span style="color:#5253f7">"<%= @tweet %>"</span>
+    </p>
+  <% end %>
+
+  <p>
+    <a href="/" class="awesome">Again</a>
+  </p>
+  
+  <p style="font-size:9pt; color:#999" class="disclaimer">
+    <span style="vertical-align:super; color:#a80000;">*</span>Please keep in mind that this is in no way an accurate representation of whether or not
+    this individual actually is wearing pants. We are meerly estimating the likelihood of 
+    the current pants situation. Please take all results with a grain of salt, two cents, and any other 
+    measure that cancels all credibility of these results.
+  </p>
+
+</div>
