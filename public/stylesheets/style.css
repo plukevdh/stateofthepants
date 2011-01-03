@@ -66,7 +66,7 @@ body {
 	height: auto;
 	padding: 20px;
 	padding-top: 45px;
-	width: 600px;
+	width: 700px;
 	margin-right: auto;
 	margin-left: auto;
 	background-color: rgba(47,47,47,0.8);
@@ -80,12 +80,16 @@ body {
 }
 
 .title h1 {
-	font-weight: bold;
+  font-family: "jeanne-moderno-ultra-1","jeanne-moderno-ultra-2", Helvetica;
 	padding-top: 5px;
 	padding-bottom: 20px;
 	text-align: center;
-	font-size: 50px;
-	color: #88cae7;
+	font-size: 45pt;
+	color: #76AFC8;
+}
+
+.title h1 b {
+  color: #5E8B9F;
 }
 
 .search, .result {
