@@ -34,12 +34,9 @@ helpers do
       end
     end
 
-    # incr counter
-    id = redis.incr :uniq_id
+    id = key_log(status)
     # save search terms to redis
     redis.hset(:terms, id, parts.join(","))
-    # save tweet for reference
-    redis.hset(:tweets, id, status)
     
     percent = ((on + off).to_f.abs / parts.size.to_f) * 100.0
     variation = (questionable.to_f / parts.size.to_f) * 100.0
@@ -50,6 +47,14 @@ helpers do
     redis.hset(:stats, id, [percent, variation].join(":"))
 
     "has a #{percent}% chance of pantslessness with a margin of #{variation}!"
+  end
+
+  def key_log(status)
+    # incr counter
+    id = redis.incr :uniq_id
+    # save tweet for reference
+    redis.hset(:tweets, id, status)
+    return id
   end
 
 end
@@ -64,7 +69,13 @@ post '/search' do
   search.containing(PANTS).from(params[:username])
   statuses = search.fetch
   
-  status = statuses.empty? ? "currently has no data pertaining to pants." : calculate(statuses.first.text)
+  if statuses.empty?
+    status = "currently has no data pertaining to pants."
+    key_log("No status found")
+  else 
+    status = calculate(statuses.first.text)
+  end
+
   @result = "User <a href='http://twitter.com/#{params[:username]}'>@#{params[:username]}</a> #{status}"
 
   @tweet = statuses.first.text unless statuses.empty?
