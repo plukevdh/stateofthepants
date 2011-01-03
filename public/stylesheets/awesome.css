@@ -1,3 +1,5 @@
+/* @override http://www.stateofthepants.com/stylesheets/awesome.css */
+
 /*
     awesome buttons are based on a blog post by ZERB
     Read there blog post for more information:
@@ -12,8 +14,8 @@
 
 /* set an awesome color for the buttons, feel free to add new colors like an .awesome.green or .awesome.secondary */
 .awesome {
-  background-color: #e3e3e3;
-  color: #000;
+  background-color: #6ab0ce;
+  color: #fffeff;
 }
 
 /* the awesome size gets set here. Feel free to add new sizes, like .awesome.small or .small.large */
