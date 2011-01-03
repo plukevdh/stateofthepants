@@ -24,8 +24,8 @@
 }
 .awesome:active { padding: 4px 8px 5px !important; }
 
-.awesome.big { padding: 8px 16px 9px !important;
-	font-size: 14px;
+.awesome.big { padding: 16px 32px 17px !important;
+	font-size: 20px !important;
 }
 
 /* Touch the rest at your onw risk. */
