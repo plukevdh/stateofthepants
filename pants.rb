@@ -75,6 +75,6 @@ end
 
 post '/evaluate' do
   id = params[:id]
-  redis.lpush "evaluation:#{params[:id]}", params[:eval]
+  redis.hset :evaluation, params[:id], params[:eval]
 end
 

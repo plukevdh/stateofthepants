@@ -1,3 +1,5 @@
+/* @override http://www.stateofthepants.com/stylesheets/style.css */
+
 /* @group Reset */
 
 body {
@@ -72,6 +74,9 @@ body {
 	-moz-border-radius-bottomright: 15px;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
+	-moz-box-shadow: 0 0 30px #111;
+	-webkit-box-shadow: 0 0 30px #111;
+	box-shadow: 0 0 30px #111;
 }
 
 .title h1 {
@@ -80,6 +85,7 @@ body {
 	padding-bottom: 20px;
 	text-align: center;
 	font-size: 50px;
+	color: #88cae7;
 }
 
 .search, .result {
@@ -106,10 +112,10 @@ body {
 	margin-top: 45px;
 }
 
-a {
-	color: #afafaf;
-} a:hover {
-	color: #a3a3a3;
+a:not(.awesome) {
+	color: #72A9C1;
+} a:hover:not(.awesome) {
+	color: #8fd4f2;
 }
 
 t {
