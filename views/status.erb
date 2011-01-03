@@ -5,21 +5,23 @@
 
   <% if @tweet %>
     <p style="font-size:13pt;" class="message">
-      This is loosely<span style="vertical-align:super; color:#a80000; font-size:10pt">*</span> based on the following tweet: <span style="color:#5253f7">"<%= @tweet %>"</span>
+      This is loosely<span style="vertical-align:top; color:#a80000; font-size:10pt">*</span> based on the following tweet:
     </p>
+    <p style="color:#5253f7">"<%= @tweet %>"</p>
   <% end %>
 
-  <div id="evals">
-    <h3>Help us make us better</h3>
+  <div id="evals" style="padding:30px">
+    <h2>Help us make us better</h2>
     Was this evaluation any good?
-    <br/>
-    <a href="/evaluate?id=<%=@id%>&eval=yes" class="eval awesome">Yes</a>
-    <a href="/evaluate?id=<%=@id%>&eval=no" class="eval awesome">No</a>
+    <div style="padding-top:15px">
+      <a href="/evaluate?id=<%=@id%>&eval=yes" class="eval awesome">Yes</a>
+      <a href="/evaluate?id=<%=@id%>&eval=no" class="eval awesome">No</a>
+    </div>
   </div>
   
-  <p>
-    <a href="/" class="awesome">Again</a>
-  </p>
+  <div style="padding-top:40px">
+    <a href="/" class="awesome big">Again</a>
+  </div>
   
   <p style="font-size:9pt; color:#999" class="disclaimer">
     <span style="vertical-align:super; color:#a80000;">*</span>Please keep in mind that this is in no way an accurate representation of whether or not

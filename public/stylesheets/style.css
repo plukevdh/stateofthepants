@@ -63,7 +63,7 @@ body {
 }
 
 .content {
-	height: 400px;
+	height: auto;
 	padding: 20px;
 	padding-top: 45px;
 	width: 600px;
@@ -107,7 +107,6 @@ body {
 	margin: 15px;
 } .result .message {
 	margin: 15px;
-	color: #a80000;
 } .result .disclaimer {
 	margin-top: 45px;
 }
