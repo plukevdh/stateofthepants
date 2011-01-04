@@ -18,25 +18,33 @@ helpers do
     neg = []
 
     tweets.each do |tweet| 
-      if tweet.include?(positive) && !tweet.include?(negative)
+      if tweet.include?(positive) 
         pos << tweet
-      elsif !tweet.include?(positive) && tweet.include?(negative)
+      elsif tweet.include?(negative)
         neg << tweet
       else
         tweets.delete tweet
       end
     end
-    
-    tc = tweets.count
-    nc = neg.count
-    pc = pos.count
+
+    key = "#{term}:#{positive}:#{negative}"
 
     # store this result in redis to be updated on future searches
-    tweets.each { |x| redis.sadd("tweets:#{term}", tweets) }
-    redis.set "total:#{term}:count", tc 
-    redis.set "positive:#{term}:count", pc 
-    redis.set "negative:#{term}:count", nc 
+    tweets.each { |x| redis.sadd("tweets:#{key}:total", x) }
+    tc = redis.smembers("tweets:#{key}:total").count
+    
+    pos.each { |x| redis.sadd("tweets:#{key}:positive", x) }
+    pc = redis.smembers("tweets:#{key}:positive").count
 
+    neg.each { |x| redis.sadd("tweets:#{key}:negative", x) }
+    nc = redis.smembers("tweets:#{key}:negative").count
+
+
+    redis.set "total:#{key}:count", tc 
+    redis.set "positive:#{key}:count", pc 
+    redis.set "negative:#{key}:count", nc 
+
+    puts [tc, pc, nc].join ", "
     return tc.to_f, pc.to_f, nc.to_f
   end
 end
