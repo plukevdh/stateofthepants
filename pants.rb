@@ -3,12 +3,6 @@ require 'erb'
 require 'twitter'
 require 'redis'
 
-PANTS = "pants OR jeans OR slacks"
-
-ON = %w(on wearing wear wore worn in)
-OFF = %w(off no down without out don't didn't won't)
-FLAG = %w(should might had put get back)
-
 REDIS_CONNECTION = redis = Redis.new(host: "localhost", port: 6379)
 
 helpers do
@@ -16,47 +10,35 @@ helpers do
     REDIS_CONNECTION
   end
 
-  def calculate(status)
-    parts = status.split(' ')
-    parts.delete_if {|x| x.downcase! ; (!ON.include? x and !OFF.include? x and !FLAG.include? x) }
-    
-    questionable = 0
-    on = 0
-    off = 0
+  def calculate(statuses, term, positive, negative)
+    # get texts
+    tweets = statuses.map {|x| x.text}
+    # delete tweets containing both terms
+    pos = []
+    neg = []
 
-    parts.each do |x|
-      if FLAG.include? x
-        questionable += 1
-      elsif ON.include? x
-        on -= 1
-      elsif OFF.include? x
-        off += 1
+    tweets.each do |tweet| 
+      if tweet.include?(positive) && !tweet.include?(negative)
+        pos << tweet
+      elsif !tweet.include?(positive) && tweet.include?(negative)
+        neg << tweet
+      else
+        tweets.delete tweet
       end
     end
-
-    id = key_log(status)
-    # save search terms to redis
-    redis.hset(:terms, id, parts.join(","))
     
-    percent = ((on + off).to_f.abs / parts.size.to_f) * 100.0
-    variation = (questionable.to_f / parts.size.to_f) * 100.0
+    tc = tweets.count
+    nc = neg.count
+    pc = pos.count
 
-    percent = 0 if percent.nan?
-    variation = 100 if variation.nan?
+    # store this result in redis to be updated on future searches
+    tweets.each { |x| redis.sadd("tweets:#{term}", tweets) }
+    redis.set "total:#{term}:count", tc 
+    redis.set "positive:#{term}:count", pc 
+    redis.set "negative:#{term}:count", nc 
 
-    redis.hset(:stats, id, [percent, variation].join(":"))
-
-    "has a #{percent}% chance of pantslessness with a margin of #{variation}!"
+    return tc.to_f, pc.to_f, nc.to_f
   end
-
-  def key_log(status)
-    # incr counter
-    id = redis.incr :uniq_id
-    # save tweet for reference
-    redis.hset(:tweets, id, status)
-    return id
-  end
-
 end
 
 
@@ -65,27 +47,19 @@ get '/' do
 end
 
 post '/search' do
-  search = Twitter::Search.new
-  search.containing(PANTS).from(params[:username])
+  search = Twitter::Search.new.phrase(params[:term]).containing("#{params[:positive]} OR #{params[:negative]}").per_page(100)
   statuses = search.fetch
-  
-  if statuses.empty?
-    status = "currently has no data pertaining to pants."
-    key_log("No status found")
-  else 
-    status = calculate(statuses.first.text)
-  end
 
-  @result = "User <a href='http://twitter.com/#{params[:username]}'>@#{params[:username]}</a> #{status}"
+  @total, @positive, @negative = calculate(statuses, params[:term].downcase, params[:positive], params[:negative]) 
 
-  @tweet = statuses.first.text unless statuses.empty?
-  @id = redis.get "uniq_id"
+  @pcent = (@positive/@total)*100.0
+  @ncent = (@negative/@total)*100.0
 
   erb :status 
 end
 
 post '/evaluate' do
   id = params[:id]
-  redis.hset :evaluation, params[:id], params[:eval]
+  redis.hset :evaluation, params[:term], params[:eval]
 end
 

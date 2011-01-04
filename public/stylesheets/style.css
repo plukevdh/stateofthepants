@@ -52,10 +52,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 
 /* @end */
-* {
-	margin: 40px;	
-}
-
 body {
 	font-family: helvetica;
 	background: 
@@ -66,6 +62,12 @@ body {
 	color: #ebeaeb;
 }
 
+h1 { font-size: 30pt; }
+h2 { font-size: 20pt; } 
+h2 { font-size: 18pt; } 
+
+div { padding: 20px; }
+
 .content {
 	height: auto;
 	padding: 20px;
@@ -73,6 +75,7 @@ body {
 	width: 700px;
 	margin-right: auto;
 	margin-left: auto;
+	margin-top: 0;
 	background-color: rgba(47,47,47,0.8);
 	-moz-border-radius-bottomleft: 15px;
 	-moz-border-radius-bottomright: 15px;
@@ -108,6 +111,7 @@ body {
 	border: 1px solid #c3c3c3;
 	text-align: center;
 	padding: 5px;
+	margin: 2px;
 }
 
 .result .data {
@@ -128,4 +132,16 @@ a:not(.awesome) {
 t {
 	color: #5253f7;
 }
+
+.graph-positive, .graph-negative {
+	width:5px; 
+	height:50px; 
+	display:inline-block;
+	padding: 0;
+	margin: 0;	
+} 
+.graph-positive { background-color: #905C71; } 
+.graph-positive:hover { background-color: #cd86a5; } 
+.graph-negative { background-color: #6486A1; }
+.graph-negative:hover { background-color: #92c2e9; }
 

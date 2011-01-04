@@ -1,12 +1,29 @@
 <div class="search">
-  <h3 class="message">Enter a twitter username</h3>
 
   <form action='/search' method="post">
-    <input type="text" name="username" />
+    <h3 class="message">Enter a word to search by:</h3>
+    <span class="sub">(ex. chocolate)</span>
     <br/>
-    <input type="submit" value="State of the Pants" class="awesome big" />
+
+    <div>
+      <input type="text" name="term" />
+    </div>
+
+    <div>
+      <h3 class="message">Enter a positive and a negative to poll with</h3>   
+      <span class="sub">(ex. love + hate)</span>
+    </div>
+
+    <div>
+      <input type="text" name="positive" size="8" />
+      <span style="font-size:28pt">+</span>
+      <input type="text" name="negative" size="8" />
+    </div>
+
+    <div>
+      <input type="submit" value="State of the Pants" class="awesome big" />
+    </div>
   </form>
 
-  <br/>
   <br/>
 </div>
