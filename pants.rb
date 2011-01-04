@@ -52,6 +52,7 @@ post '/search' do
 
   # keep track of search terms
   redis.sadd :searches, params[:term]
+  redis.incr "searched:#{params[:term]}:count"
 
   @total, @positive, @negative = calculate(statuses, params[:term].downcase, params[:positive], params[:negative]) 
 
