@@ -50,6 +50,9 @@ post '/search' do
   search = Twitter::Search.new.phrase(params[:term]).containing("#{params[:positive]} OR #{params[:negative]}").per_page(100)
   statuses = search.fetch
 
+  # keep track of search terms
+  redis.sadd :searches, params[:term]
+
   @total, @positive, @negative = calculate(statuses, params[:term].downcase, params[:positive], params[:negative]) 
 
   @pcent = (@positive/@total)*100.0
