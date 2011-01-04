@@ -58,7 +58,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 body {
 	font-family: helvetica;
-	background: url(../images/colors.png) repeat;
+	background: 
+		url(../images/denim.png) repeat fixed 50%,
+		url(../images/colors.png) repeat fixed -50%;
+
+	background-color: #1a1a1a;
 	color: #ebeaeb;
 }
 
